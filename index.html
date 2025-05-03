@@ -1,22 +1,63 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>檢查中...</title>
-  </head>
-  <body>
-    <p>正在檢查您是否可以填寫表單，請稍候...</p>
-    <script>
-      fetch('https://api.ipify.org?format=json')
-        .then(res => res.json())
-        .then(data => {
-          const ip = data.ip;
-          const url = `https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec?ip=${ip}`;
-          window.location.href = url;
-        })
-        .catch(err => {
-          document.body.innerHTML = "無法取得 IP，請稍後再試。";
-        });
-    </script>
-  </body>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛍️ 東手帶個袋</title>
+  <style>
+    body {
+      font-family: "Segoe UI", "微軟正黑體", sans-serif;
+      text-align: center;
+      padding: 40px;
+      background-color: #fdf8f2;
+      color: #333;
+    }
+    .emoji {
+      font-size: 3rem;
+      animation: bounce 1.6s infinite;
+    }
+    .loading {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #888;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .title {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .sub {
+      font-size: 1.1rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="emoji">🥦🥕🛒</div>
+  <div class="title">東手帶個袋，一起來買菜！</div>
+  <div class="sub">我們正在檢查您的資格，請稍候～</div>
+  <div class="loading">⏳ 正在載入表單(請不要關閉視窗)...</div>
+
+  <script>
+    // 修改為你的 Apps Script Web App URL
+    const checkUrl = "https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec";
+
+    fetch(checkUrl)
+      .then(res => res.json())
+      .then(data => {
+        if (data.allowed) {
+          window.location.href = "https://tally.so/r/nP4gob"; // 允許者導入 Tally 表單
+        } else {
+          alert("🙈 您已經參加過囉！請明日再試一次！");
+        }
+      })
+      .catch(err => {
+        alert("⚠️ 系統錯誤，請稍後再試！");
+        console.error(err);
+      });
+  </script>
+</body>
 </html>
