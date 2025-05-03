@@ -42,14 +42,19 @@
   <div class="loading">⏳ 正在載入表單(請不要關閉視窗)...</div>
 
   <script>
-    // 修改為你的 Apps Script Web App URL
     const checkUrl = "https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec";
+    const formUrl = "https://tally.so/r/nP4gob";
 
-    fetch(checkUrl)
+    fetch("https://api.ipify.org?format=json")
+      .then(response => response.json())
+      .then(data => {
+        const ip = data.ip;
+        return fetch(`${checkUrl}?ip=${ip}`);
+      })
       .then(res => res.json())
       .then(data => {
         if (data.allowed) {
-          window.location.href = "https://tally.so/r/nP4gob"; // 允許者導入 Tally 表單
+          window.location.href = formUrl;
         } else {
           alert("🙈 您已經參加過囉！請明日再試一次！");
         }
