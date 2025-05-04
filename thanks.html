@@ -2,39 +2,43 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>🎉 感謝填寫</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎉 感謝您的參與！</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: "Segoe UI", "微軟正黑體", sans-serif;
       text-align: center;
       padding: 40px;
-      background-color: #e8f5e9;
-      color: #2e7d32;
+      background-color: #f0fff4;
+      color: #333;
+    }
+    h1 {
+      font-size: 2rem;
     }
     .emoji {
       font-size: 3rem;
-      margin-bottom: 20px;
     }
-    .msg {
-      font-size: 1.5rem;
+    .info {
+      margin-top: 20px;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <div class="emoji">✅</div>
-  <div class="msg">感謝您完成填寫！</div>
+  <div class="emoji">✨🧺🥰</div>
+  <h1>謝謝您已完成填寫！</h1>
+  <div class="info">您可以關閉本頁面囉～</div>
 
   <script>
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec";
+    const logUrl = "https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec?action=log";
 
-    fetch("https://api.ipify.org?format=json")
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip;
-        return fetch(`${scriptUrl}?record=true&ip=${ip}`);
+    fetch(logUrl)
+      .then(() => {
+        console.log("IP 已記錄");
       })
-      .catch(err => console.error("記錄 IP 發生錯誤", err));
+      .catch(err => {
+        console.error("記錄失敗", err);
+      });
   </script>
 </body>
 </html>
