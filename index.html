@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🛍️「東」手帶個袋，「共」同來買菜</title>
+  <title>🛍️ 東手帶個袋</title>
   <style>
     body {
       font-family: "Segoe UI", "微軟正黑體", sans-serif;
@@ -36,25 +36,34 @@
   </style>
 </head>
 <body>
-  <div class="emoji">🥦🥕🛍️</div>
+  <div class="emoji">🥦🥕🛒</div>
   <div class="title">「東」手帶個袋，「共」來買菜！</div>
   <div class="sub">我們正在檢查您的資格，請稍候～</div>
   <div class="loading">⏳ 正在載入表單(請不要關閉視窗)...</div>
 
   <script>
-    const checkUrl = "https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec?action=check";
+    const scriptBase = "https://script.google.com/macros/s/AKfycbxy3HLRnV8LFeekyS84JfJ_unzt2FoNoECdARIfi7ThLBXu4rSuXQ-NOZpYwFMNNS0bAA/exec";
 
-    fetch(checkUrl)
+    // 取得使用者真實 IP
+    fetch("https://api.ipify.org?format=json")
       .then(res => res.json())
-      .then(data => {
-        if (data.allowed) {
-          window.location.href = "https://tally.so/r/nP4gob";
-        } else {
-          alert("🙈 您已經參加過囉！請明日再試一次！");
-        }
+      .then(ipData => {
+        const ip = ipData.ip;
+
+        // 呼叫 Apps Script 檢查是否允許
+        fetch(`${scriptBase}?action=check&ip=${ip}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.allowed) {
+              // 若允許，導向表單
+              window.location.href = "https://tally.so/r/nP4gob";
+            } else {
+              alert("🙈 您已經參加過囉！請明日再試一次！");
+            }
+          });
       })
       .catch(err => {
-        alert("⚠️ 系統錯誤，請稍後再試！");
+        alert("⚠️ 無法取得您的 IP，請稍後再試！");
         console.error(err);
       });
   </script>
